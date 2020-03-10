@@ -5,17 +5,26 @@ import java.util.List;
 
 import javax.persistence.CascadeType;
 import javax.persistence.OneToMany;
+import javax.validation.constraints.NotBlank;
 
 public class Employee {
 
 	private Long eid;
+	
+	@NotBlank(message = "Ename cannot be null")
 	private String ename;
+	
+	@NotBlank(message = "Designation cannot be null")
 	private String designation;
+	
+	@NotBlank(message = "Location cannot be null")
 	private String location;
+	
 	private Date swipeIn;
+	
 	private Date swipeOut;
 	
-	@OneToMany(mappedBy = "employee", cascade = CascadeType.ALL)
+	//@OneToMany(mappedBy = "employee", cascade = CascadeType.ALL)
 	public List<LoginTimeAudit> login;
 
 	public Long getEid() {

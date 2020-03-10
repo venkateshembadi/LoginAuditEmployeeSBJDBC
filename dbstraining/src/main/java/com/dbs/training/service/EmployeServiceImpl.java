@@ -14,14 +14,16 @@ public class EmployeServiceImpl implements EmployeService {
 	private JdbcTemplate jdbcTemplate;
 
 	@Override
-	public long saveEmployee(Employee emp) {
+	public long saveEmployee(Employee emp){
+		
 		return jdbcTemplate.update("insert into EmployeeEntity (ename, location,designation) values(?,?,?)",
 				emp.getEname(), emp.getLocation(), emp.getDesignation());
 	}
 
 	@Override
-	public long updateSwipeHours(Employee emp) {
-		return 0;
+	public long updateSwipeHours(Employee emp,Long eid) {
+		return jdbcTemplate.update("update EmployeeEntity set emp.getEname(), emp.getLocation(), emp.getDesignation() where emp.getEid=eid");
+				
 	}
 
 	

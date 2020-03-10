@@ -1,7 +1,6 @@
 package com.dbs.training.request;
 
 import java.sql.Timestamp;
-import java.util.Date;
 
 public class LoginTimeAudit {
 	

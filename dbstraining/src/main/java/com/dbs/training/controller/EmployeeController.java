@@ -1,13 +1,15 @@
 package com.dbs.training.controller;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-
 import com.dbs.training.exception.EmployeeException;
 import com.dbs.training.exception.LoginAuditException;
 import com.dbs.training.request.Employee;
@@ -22,22 +24,17 @@ public class EmployeeController {
 	EmployeService empservice;
 
 	@PostMapping("/employe")
-	public ResponseEntity<?> saveEmployee(@RequestBody Employee request) {
-		long employee;
-		try {
-			employee = empservice.saveEmployee(request);
-		} catch (Exception e) {
-			throw new EmployeeException("Unable to save employee details");
-		}
+	public ResponseEntity<?> saveEmployee(@Valid @RequestBody Employee request) {
+		long employee = empservice.saveEmployee(request);
 		return ResponseEntity.ok().body(employee);
 	}
 
-	@PutMapping("/employeeswipe")
-	public ResponseEntity<?> updateSwapeHours(@RequestBody Employee request) {
+	@PutMapping("/employeeswipe/{eid}")
+	public ResponseEntity<?> updateSwapeHours(@RequestBody Employee request,@PathVariable Long eid) {
 
 		long employee;
 		try {
-			employee = empservice.updateSwipeHours(request);
+			employee = empservice.updateSwipeHours(request,eid);
 		} catch (Exception e) {
 			throw new EmployeeException("Unable to update employee details");
 		}

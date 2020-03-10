@@ -11,7 +11,7 @@ public interface EmployeService {
 	
 	long saveEmployee(Employee emp);
 	
-	long updateSwipeHours(Employee emp);
+	long updateSwipeHours(Employee emp,Long eid);
 	
 	int auditsave(LoginTimeAudit login);
 	
