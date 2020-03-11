@@ -25,23 +25,22 @@ public class EmployeeController {
 
 	@PostMapping("/employe")
 	public ResponseEntity<?> saveEmployee(@Valid @RequestBody Employee request) {
-		long employee = empservice.saveEmployee(request);
+		Employee employee = empservice.saveEmployee(request);
 		return ResponseEntity.ok().body(employee);
 	}
 
-	@PutMapping("/employeeswipe/{eid}")
-	public ResponseEntity<?> updateSwapeHours(@RequestBody Employee request,@PathVariable Long eid) {
-
-		long employee;
-		try {
-			employee = empservice.updateSwipeHours(request,eid);
-		} catch (Exception e) {
-			throw new EmployeeException("Unable to update employee details");
-		}
-		return ResponseEntity.ok().body(employee);
-
-	}
-
+	/*
+	 * @PutMapping("/employeeswipe/{eid}") public ResponseEntity<?>
+	 * updateSwapeHours(@RequestBody Employee request,@PathVariable Long eid) {
+	 * 
+	 * long employee; try { employee = empservice.updateSwipeHours(request,eid); }
+	 * catch (Exception e) { throw new
+	 * EmployeeException("Unable to update employee details"); } return
+	 * ResponseEntity.ok().body(employee);
+	 * 
+	 * }
+	 */
+/*
 	@PutMapping("/loginaudit")
 	public ResponseEntity<?> loginSwapeHours(@RequestBody LoginTimeAudit request) {
 		long employee;
@@ -52,6 +51,6 @@ public class EmployeeController {
 		}
 
 		return ResponseEntity.ok().body(employee);
-	}
+	}*/
 
 }

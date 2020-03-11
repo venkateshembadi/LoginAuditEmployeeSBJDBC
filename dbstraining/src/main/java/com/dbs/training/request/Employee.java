@@ -3,37 +3,30 @@ package com.dbs.training.request;
 import java.util.Date;
 import java.util.List;
 
-import javax.persistence.CascadeType;
-import javax.persistence.OneToMany;
 import javax.validation.constraints.NotBlank;
 
 public class Employee {
-
-	private Long eid;
 	
+	private Long eid;
+
 	@NotBlank(message = "Ename cannot be null")
 	private String ename;
-	
+
 	@NotBlank(message = "Designation cannot be null")
 	private String designation;
-	
+
 	@NotBlank(message = "Location cannot be null")
 	private String location;
 	
-	private Date swipeIn;
-	
-	private Date swipeOut;
-	
-	//@OneToMany(mappedBy = "employee", cascade = CascadeType.ALL)
-	public List<LoginTimeAudit> login;
+	public LoginTimeAudit login;
 
-	public Long getEid() {
-		return eid;
-	}
-
-	public void setEid(Long eid) {
-		this.eid = eid;
-	}
+	/*
+	 * private Date swipeIn;
+	 * 
+	 * private Date swipeOut;
+	 */
+	 
+	
 
 	public String getEname() {
 		return ename;
@@ -59,7 +52,25 @@ public class Employee {
 		this.location = location;
 	}
 
-	public Date getSwipeIn() {
+	public LoginTimeAudit getLogin() {
+		return login;
+	}
+
+	public void setLogin(LoginTimeAudit login) {
+		this.login = login;
+	}
+
+	public Long getEid() {
+		return eid;
+	}
+
+	public void setEid(Long eid) {
+		this.eid = eid;
+	}
+	
+	
+
+	/*public Date getSwipeIn() {
 		return swipeIn;
 	}
 
@@ -73,14 +84,7 @@ public class Employee {
 
 	public void setSwipeOut(Date swipeOut) {
 		this.swipeOut = swipeOut;
-	}
+	}*/
 
-	public List<LoginTimeAudit> getLogin() {
-		return login;
-	}
-
-	public void setLogin(List<LoginTimeAudit> login) {
-		this.login = login;
-	}
-
+	
 }

@@ -1,4 +1,4 @@
-package com.dbs.training.service;
+/*package com.dbs.training.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -16,13 +16,13 @@ public class EmployeServiceImpl implements EmployeService {
 	@Override
 	public long saveEmployee(Employee emp){
 		
-		return jdbcTemplate.update("insert into EmployeeEntity (ename, location,designation) values(?,?,?)",
+		return jdbcTemplate.update("insert into Employee (ename, location,designation) values(?,?,?)",
 				emp.getEname(), emp.getLocation(), emp.getDesignation());
 	}
 
 	@Override
 	public long updateSwipeHours(Employee emp,Long eid) {
-		return jdbcTemplate.update("update EmployeeEntity set emp.getEname(), emp.getLocation(), emp.getDesignation() where emp.getEid=eid");
+		return jdbcTemplate.update("update Employee set emp.getEname(), emp.getLocation(), emp.getDesignation() where emp.getEid=eid");
 				
 	}
 
@@ -50,3 +50,4 @@ public class EmployeServiceImpl implements EmployeService {
 	
 	}
 
+*/
