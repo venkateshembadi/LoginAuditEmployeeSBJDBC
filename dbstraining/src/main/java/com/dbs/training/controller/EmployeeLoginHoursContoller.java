@@ -15,12 +15,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.dbs.training.entity.EmployeeEntity;
+import com.dbs.training.exception.EmployeeException;
 import com.dbs.training.request.Employee;
 import com.dbs.training.service.EmployeeLoginHoursImpl;
 
 @RestController
 @RequestMapping("/employee")
-public class EmployeeLoginHours {
+public class EmployeeLoginHoursContoller {
 	
 	@Autowired
 	public EmployeeLoginHoursImpl loginHours;
@@ -39,7 +40,7 @@ public class EmployeeLoginHours {
 	
 	
 	@GetMapping("/fetch/{eid}")
-	public ResponseEntity<?> fetchEmployeeDetails(@PathVariable Long eid){
+	public ResponseEntity<?> fetchEmployeeDetails(@PathVariable Long eid) throws EmployeeException{
 		Employee response = loginHours.fetchEmployeeDetails(eid);
 		return ResponseEntity.ok().body(response);
 	}

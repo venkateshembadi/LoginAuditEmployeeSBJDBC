@@ -6,9 +6,12 @@ import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import org.springframework.util.CollectionUtils;
 
 import com.dbs.training.entity.EmployeeEntity;
 import com.dbs.training.entity.LoginTimeAuditEntity;
+import com.dbs.training.exception.EmployeeException;
+import com.dbs.training.exception.GlobalException;
 import com.dbs.training.repository.EmployeeRepository;
 import com.dbs.training.request.Employee;
 import com.dbs.training.request.LoginTimeAudit;
@@ -26,54 +29,59 @@ public class EmployeeLoginHoursImpl implements EmployeService {
 		EmployeeEntity entity=null;
 		if(emp !=null) {
 			entity=new EmployeeEntity();
-			if(StringUtils.isNotBlank(emp.getDesignation())) 
-				entity.setDesignation(emp.getDesignation());
-			if(StringUtils.isNotBlank(emp.getEname())) 
-			entity.setEname(emp.getEname());
-			if(StringUtils.isNotBlank(emp.getLocation())) 
-			entity.setLocation(emp.getLocation());
-			LoginTimeAuditEntity login= new LoginTimeAuditEntity();
-			if(StringUtils.isNotBlank(emp.getLogin().getFlag()))
-			login.setFlag(emp.getLogin().getFlag());
-			login.setEmp(entity);
-			List<LoginTimeAuditEntity> loginList=new ArrayList<>();
-			loginList.add(login);
-			entity.setLogin(loginList);
+			Employee employee=mapData(emp,entity);
 			empDao.save(entity);
+			return employee;
 		}
 		
-		return emp;
+		return null;
 	}
 	
 	
 	
 	@Override
-	public Employee updateEmployee(Employee emp,Long eid) {
+	public Employee updateEmployee(Employee emp, Long eid) throws EmployeeException {
+		Employee employee = null;
+		// try {
 		Optional<EmployeeEntity> empRecord = empDao.findById(eid);
-		EmployeeEntity entity=null;
-		if(empRecord.isPresent()) {
-			entity=new EmployeeEntity();
-			if(StringUtils.isNotBlank(emp.getDesignation())) 
-				entity.setDesignation(emp.getDesignation());
-			if(StringUtils.isNotBlank(emp.getEname())) 
-			entity.setEname(emp.getEname());
+		EmployeeEntity entity = null;
+		if (empRecord.isPresent()) {
+			entity = new EmployeeEntity();
 			entity.setEid(eid);
-			if(StringUtils.isNotBlank(emp.getLocation())) 
-			entity.setLocation(emp.getLocation());
-			LoginTimeAuditEntity login= new LoginTimeAuditEntity();
-			if(StringUtils.isNotBlank(emp.getLogin().getFlag()))
-			login.setFlag(emp.getLogin().getFlag());
-			login.setEmp(entity);
-			List<LoginTimeAuditEntity> loginList=new ArrayList<>();
-			loginList.add(login);
-			entity.setLogin(loginList);
+			employee = mapData(emp, entity);
 			empDao.save(entity);
-			return emp;
+			return employee;
+
+		} else {
+			throw new EmployeeException("empRecord doesnt exist");
 		}
-		else {
-			return null;
+
+	
+	// catch(Exception e) {
+	// throw new EmployeeException("empRecord doesnt exist");
+	// }
+	//return employee;
+
+	}
+	
+	public Employee mapData(Employee emp,EmployeeEntity entity) {
+		if(StringUtils.isNotBlank(emp.getDesignation())) 
+			entity.setDesignation(emp.getDesignation());
+		if(StringUtils.isNotBlank(emp.getEname())) 
+		entity.setEname(emp.getEname());
+		if(StringUtils.isNotBlank(emp.getLocation())) 
+		entity.setLocation(emp.getLocation());
+		LoginTimeAuditEntity login= new LoginTimeAuditEntity();
+		if(!CollectionUtils.isEmpty(emp.getLogin())) {
+			for(LoginTimeAudit l:emp.getLogin()) {
+				login.setFlag(l.getFlag());
+			}
 		}
-		
+		login.setEmp(entity);
+		List<LoginTimeAuditEntity> loginList=new ArrayList<>();
+		loginList.add(login);
+		entity.setLogin(loginList);
+		return emp;
 	}
 	
 	@Override
@@ -88,11 +96,13 @@ public class EmployeeLoginHoursImpl implements EmployeService {
 			e.setEname(entity.getEname());
 			e.setLocation(entity.getLocation());
 			LoginTimeAudit loginRes=null;
+			List<LoginTimeAudit> loginList=new ArrayList<>();
 			for(LoginTimeAuditEntity login:entity.getLogin()) {
 				loginRes=new LoginTimeAudit();
 				loginRes.setAudittime(login.getAudittime());
 				loginRes.setFlag(login.getFlag());
-				e.setLogin(loginRes);
+				loginList.add(loginRes);
+				e.setLogin(loginList);
 			}
 			
 		}

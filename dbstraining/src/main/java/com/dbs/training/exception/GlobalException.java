@@ -3,6 +3,7 @@ package com.dbs.training.exception;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
@@ -10,6 +11,7 @@ import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExcep
 public class GlobalException extends ResponseEntityExceptionHandler {
 	
 	@ExceptionHandler(value=EmployeeException.class)
+	@ResponseStatus(HttpStatus.NOT_FOUND)
 	public ResponseEntity<ErrorResponse> handleException(EmployeeException exception) {
 		ErrorResponse error=new ErrorResponse();
 		error.setErrorMessage("Unable to process request");

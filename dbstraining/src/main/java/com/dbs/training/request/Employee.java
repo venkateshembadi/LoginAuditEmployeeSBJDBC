@@ -1,6 +1,5 @@
 package com.dbs.training.request;
 
-import java.util.Date;
 import java.util.List;
 
 import javax.validation.constraints.NotBlank;
@@ -18,7 +17,7 @@ public class Employee {
 	@NotBlank(message = "Location cannot be null")
 	private String location;
 	
-	public LoginTimeAudit login;
+	public List<LoginTimeAudit> login;
 
 	/*
 	 * private Date swipeIn;
@@ -52,11 +51,13 @@ public class Employee {
 		this.location = location;
 	}
 
-	public LoginTimeAudit getLogin() {
+	
+
+	public List<LoginTimeAudit> getLogin() {
 		return login;
 	}
 
-	public void setLogin(LoginTimeAudit login) {
+	public void setLogin(List<LoginTimeAudit> login) {
 		this.login = login;
 	}
 
